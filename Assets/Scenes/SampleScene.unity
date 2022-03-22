@@ -280,13 +280,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57883cda18d8a3e48b9ba3344c6dbcd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 100
-  _height: 100
+  _width: 20
+  _height: 20
   _map: {fileID: 121411576}
   _floor: {fileID: 11400000, guid: 04ff333799cbb0248a9713dd9ab92e4a, type: 2}
   _wallTilePrefab: {fileID: 317887510242563443, guid: edb1308cb0b107b4ebda0ef196f12339, type: 3}
   _startMarker: {fileID: 7169432734335067174, guid: 303d1896c625739459035ec222331c89, type: 3}
   _endMarker: {fileID: 3890007118349260871, guid: a31d512bb5cefed4296a3f5ff14a3220, type: 3}
+  _wall3D: {fileID: 9177623548239084949, guid: cba44461d9179dc4fad850af62ee4eaa, type: 3}
+  _marker3d: {fileID: 4674539873790780179, guid: b0134b17c6b47da45a753c117a36b576, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

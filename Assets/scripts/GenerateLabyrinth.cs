@@ -13,6 +13,7 @@ public class GenerateLabyrinth : MonoBehaviour
     [SerializeField] private Tile _floor;
     private List<Vector3Int> _notVisited;
     [SerializeField] private GameObject _wallTilePrefab, _startMarker, _endMarker;
+    [SerializeField] private GameObject _wall3D, _marker3d;
     
     private int[,] _neighbours = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private Dictionary <Vector3Int, List<bool> > _walls;
@@ -23,7 +24,11 @@ public class GenerateLabyrinth : MonoBehaviour
         var start = _walls.Keys.ElementAt(Random.Range (0, _walls.Keys.Count));
         Generate(start);
         SetUpWalls();
-        GameObject ball = Instantiate(_startMarker, start, Quaternion.Euler(new Vector3(0, 0, 0)));
+        GameObject ball = Instantiate(_marker3d, start, Quaternion.Euler(new Vector3(0, 0, 0)));
+        ball.transform.position = new Vector3 (start.x, start.y, 0.5f);
+        ball = Instantiate (_marker3d, FindFurthest (start), Quaternion.identity);
+        var pos = ball.transform.position;
+        ball.transform.position = new Vector3 (pos.x, pos.y, 0.5f);
     }
     
     void Fill() {
@@ -86,10 +91,35 @@ public class GenerateLabyrinth : MonoBehaviour
                 var w = _walls[pos][i];
                 if (w)
                 {
-                    GameObject wall = Instantiate(_wallTilePrefab, pos, Quaternion.Euler(new Vector3(0, 0, 90*i)));
-                    wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0], pos.y + 0.5f*_neighbours[i, 1], 0);
+                    GameObject wall = Instantiate(_wall3D, pos, Quaternion.Euler(new Vector3(90*(i+1), 90 , 0)));
+                    wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0], pos.y + 0.5f*_neighbours[i, 1], 0.5f);
                 }
             }
         }
     }
+
+    Vector3Int FindFurthest(Vector3Int start) {
+        var q = new Queue<Vector3Int> ();
+        var furthest = start;
+        var visited = new List<Vector3Int> ();
+        q.Enqueue (start);
+        while (q.Count > 0)
+        {
+            var a = q.Dequeue ();
+            visited.Add (a);
+            furthest = a;
+            for (int i = 0; i < 4; i ++)
+            {
+                var newPos = new Vector3Int (a.x + _neighbours[i, 0], a.y + _neighbours[i, 1], 0);
+                if (!_walls[a][i])
+                {
+                    if (!visited.Contains (newPos))
+                    {
+                        q.Enqueue (newPos);
+                    }
+                }
+            }
+        }
+        return furthest;
     }
+}
