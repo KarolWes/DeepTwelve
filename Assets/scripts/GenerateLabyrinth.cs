@@ -25,10 +25,12 @@ public class GenerateLabyrinth : MonoBehaviour
         Generate(start);
         SetUpWalls();
         GameObject ball = Instantiate(_marker3d, start, Quaternion.Euler(new Vector3(0, 0, 0)));
-        ball.transform.position = new Vector3 (start.x, start.y, 0.5f);
+        ball.transform.position = new Vector3 (start.x, 0.5f, start.y);
+        ball.transform.position = ball.transform.position*5;
         ball = Instantiate (_marker3d, FindFurthest (start), Quaternion.identity);
         var pos = ball.transform.position;
-        ball.transform.position = new Vector3 (pos.x, pos.y, 0.5f);
+        ball.transform.position = new Vector3 (pos.x, 0.5f, pos.y);
+        ball.transform.position = ball.transform.position*5;
     }
     
     void Fill() {
@@ -91,14 +93,15 @@ public class GenerateLabyrinth : MonoBehaviour
                 var w = _walls[pos][i];
                 if (w)
                 {
-                    GameObject wall = Instantiate(_wall3D, pos, Quaternion.Euler(new Vector3(90*(i+1), 90 , 0)));
-                    wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0], pos.y + 0.5f*_neighbours[i, 1], 0.5f);
+                    GameObject wall = Instantiate(_wall3D, pos, Quaternion.Euler(new Vector3(0, 90*(i+1) , 0)));
+                    wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0], 0.5f, pos.y + 0.5f*_neighbours[i, 1]);
+                    wall.transform.position = wall.transform.position*5;
                 }
             }
         }
     }
 
-    Vector3Int FindFurthest(Vector3Int start) {
+    public Vector3Int FindFurthest(Vector3Int start) {
         var q = new Queue<Vector3Int> ();
         var furthest = start;
         var visited = new List<Vector3Int> ();
