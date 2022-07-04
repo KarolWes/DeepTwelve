@@ -38,7 +38,7 @@ public class GenerateLabyrinth : MonoBehaviour
         {
             for (int j = 0; j < _height; j ++)
             {
-                var position = new Vector3Int (i, j, 0);
+                var position = new Vector3Int (i+1, j+1, 0);
                 _map.SetTile (position, _floor);
                 _notVisited.Add (position);
                 _walls.Add (position, new List<bool> {true, true, true, true});
@@ -93,7 +93,7 @@ public class GenerateLabyrinth : MonoBehaviour
                 var w = _walls[pos][i];
                 if (w)
                 {
-                    GameObject wall = Instantiate(_wall3D, pos, Quaternion.Euler(new Vector3(0, 90*(i+1) , 0)));
+                    GameObject wall = Instantiate(_wall3D, pos, Quaternion.Euler(new Vector3(0, 90*(i) , 0)));
                     wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0], 0.5f, pos.y + 0.5f*_neighbours[i, 1]);
                     wall.transform.position = wall.transform.position*5;
                 }
