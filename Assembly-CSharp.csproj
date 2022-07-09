@@ -41,10 +41,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\scripts\bubble_controler.cs" />
      <Compile Include="Assets\scripts\PlayerMovement.cs" />
      <Compile Include="Assets\scripts\SubmarineAnimCntr.cs" />
      <Compile Include="Assets\scripts\GenerateLabyrinth.cs" />
-     <Compile Include="Assets\scripts\bubble_controler.cs" />
+     <Compile Include="Assets\scripts\TorpedoManager.cs" />
+     <Compile Include="Assets\scripts\TorpedoMovement.cs" />
      <None Include="Assets\Jiggly Bubble Free\Shaders\Particle Alpha Blended Cubemap.shader" />
      <None Include="Assets\Jiggly Bubble Free\Shaders\Particle Alpha Blended Cubemap Skybox.shader" />
      <None Include="Assets\Jiggly Bubble Free\readme_Jiggly_Bubble_Free.txt" />
