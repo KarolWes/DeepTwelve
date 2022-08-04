@@ -7,6 +7,7 @@ using UnityEngine.XR.LegacyInputHelpers;
 public class SilverFish : FishGeneral {
     [SerializeField] private int range = 5;
     [SerializeField] private float speed = 1f;
+    [SerializeField] private float scale = 5f;
     private Vector3Int _start;
     private Vector3 _finish;
     private List<Vector3> _steps;
@@ -34,8 +35,9 @@ public class SilverFish : FishGeneral {
             _steps = new List<Vector3> ();
             GenerateRoute ();
             _start = new Vector3Int (_start.x, 0, _start.y);
-            _finish = new Vector3 (_steps[0].x, Random.Range (0.0f, 1.0f), _steps[0].y);
-            transform.position = _start;
+            _finish = new Vector3 (_steps[0].x*scale, Random.Range (0.0f, 1.0f)*scale, _steps[0].y*scale);
+            transform.position = new Vector3(_start.x*scale, 0, _start.z*scale);
+            transform.rotation = Quaternion.LookRotation (_finish); 
             _ready = true;
         }
     }
@@ -83,7 +85,8 @@ public class SilverFish : FishGeneral {
             if (transform.position == _finish)
             {
                 _stepId = (_stepId + 1) % _steps.Count;
-                _finish = new Vector3 (_steps[_stepId].x, Random.Range (0.0f, 1.0f), _steps[_stepId].y);
+                _finish = new Vector3 (_steps[_stepId].x*scale, Random.Range (0.0f, 1.0f)*scale, _steps[_stepId].y*scale);
+                transform.rotation = Quaternion.LookRotation (_finish-transform.position);
             }
         }
         
