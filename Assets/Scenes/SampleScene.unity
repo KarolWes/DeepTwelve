@@ -557,7 +557,6 @@ Transform:
   m_Children:
   - {fileID: 121411578}
   - {fileID: 209721152}
-  - {fileID: 1158515659}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -635,11 +634,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 2
-    m_TransformParent: {fileID: 638195877}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2435337716688269685, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2435337716688269685, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
       propertyPath: m_LocalPosition.x
@@ -659,15 +658,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2435337716688269685, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2435337716688269685, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2435337716688269685, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2435337716688269685, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -688,11 +687,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
---- !u!4 &1158515659 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2435337716688269685, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
-  m_PrefabInstance: {fileID: 1158515658}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1158515660 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3064662629267073999, guid: 722e9d6cf0390bf4182308fce1182098, type: 3}
@@ -711,8 +705,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1158515662}
-  range: 5
-  speed: 1
+  range: 20
+  speed: 10
+  scale: 5
 --- !u!95 &1158515662
 Animator:
   serializedVersion: 4
