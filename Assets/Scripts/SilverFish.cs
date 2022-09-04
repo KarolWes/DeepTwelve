@@ -5,55 +5,51 @@ using UnityEngine.Tilemaps;
 using UnityEngine.XR.LegacyInputHelpers;
 
 public class SilverFish : FishGeneral {
+    //swims a random path between two points
     [SerializeField] private int range = 5;
-    [SerializeField] private float speed = 1f;
-    [SerializeField] private float scale = 5f;
-    private Vector3Int _start;
     private Vector3 _finish;
     private List<Vector3> _steps;
-    private MapManager _map;
     private int _stepId = 0;
-    private bool _ready = false;
+    private Renderer _fishRend;
     
     void Start() {
-        
+        _fishRend = GetComponent<Renderer> ();
     }
     
-    void Awake() {
+    protected void Awake() {
         GameManager.OnGameStateChange += GameManagerOnGameStateChanged;
     }
 
-    void OnDestroy() {
+    protected void OnDestroy() {
         GameManager.OnGameStateChange -= GameManagerOnGameStateChanged;
     }
     
     void GameManagerOnGameStateChanged(GameState state) {
+        base.GameManagerOnGameStateChanged (state);
         if (state == GameState.Game)
         {
-            _map = FindObjectOfType <MapManager> ();
-            _start = new Vector3Int (Random.Range (0, _map.GetWidth ()), Random.Range (0, _map.GetHeight ()), 0);
             _steps = new List<Vector3> ();
             GenerateRoute ();
-            _start = new Vector3Int (_start.x, 0, _start.y);
+            StartPos = new Vector3Int (StartPos.x, 0, StartPos.y);
             _finish = new Vector3 (_steps[0].x*scale, Random.Range (0.0f, 1.0f)*scale, _steps[0].y*scale);
-            transform.position = new Vector3(_start.x*scale, 0, _start.z*scale);
+            transform.position = new Vector3(StartPos.x*scale, 0, StartPos.z*scale);
             transform.rotation = Quaternion.LookRotation (_finish); 
-            _ready = true;
+            Ready = true;
         }
     }
 
     void GenerateRoute() {
-        var pos = _start;
+        var pos = StartPos;
 
         for (int i = 0; i < range; i ++)
         {
-            var acc = _map.GetAccessible (pos);
+            var acc = Map.GetAccessible (pos); //check
             var next = new List<Vector3Int> ();
             for (int j = 0; j < 4; j ++)
             {
                 if (!acc[j])
                 {
-                    next.Add (new Vector3Int (pos.x+_map._neighbours[j,0], pos.y+_map._neighbours[j,1], 0));
+                    next.Add (new Vector3Int (pos.x+Map._neighbours[j,0], pos.y+Map._neighbours[j,1], 0));
                 }
             }
             pos = next[Random.Range (0, next.Count)];
@@ -78,7 +74,7 @@ public class SilverFish : FishGeneral {
 
     // Update is called once per frame
     void Update() {
-        if (_ready)
+        if (Ready)
         {
             Swim ();
             transform.position = Vector3.MoveTowards (transform.position, _finish, speed*Time.deltaTime);
