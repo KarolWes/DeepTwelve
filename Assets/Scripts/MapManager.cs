@@ -95,7 +95,7 @@ public class MapManager : MonoBehaviour
                 if (w)
                 {
                     GameObject wall = Instantiate(_wall3D, pos, Quaternion.Euler(new Vector3(0, 90*(i) , 0)));
-                    wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0], 0.5f, pos.y + 0.5f*_neighbours[i, 1]);
+                    wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0]+0.5f, 0.5f, pos.y + 0.5f*_neighbours[i, 1]+0.5f);
                     wall.transform.position = wall.transform.position*5;
                 }
             }

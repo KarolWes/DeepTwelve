@@ -22,5 +22,6 @@ public class BlueFish : FishGeneral
     // Update is called once per frame
     void Update() {
         Circle ();
+        
     }
 }

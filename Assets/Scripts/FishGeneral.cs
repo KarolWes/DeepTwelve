@@ -12,9 +12,11 @@ public class FishGeneral : MonoBehaviour
     [SerializeField] protected float speed = 1f;
     [SerializeField] protected float scale = 5f;
     protected Vector3Int StartPos;
+    protected Vector3 CalcStarPos;
     protected MapManager Map;
     protected bool Ready = false;
     protected float tc = 0;
+    [SerializeField] protected float rad = 2;
 
     private void Start() {
         FishRend = GetComponent<Renderer> ();
@@ -30,16 +32,20 @@ public class FishGeneral : MonoBehaviour
         if (state == GameState.Game)
         {
             Map = FindObjectOfType <MapManager> ();
-            StartPos = new Vector3Int (Random.Range (0, Map.GetWidth ()), Random.Range (0, Map.GetHeight ()), 0);
+            StartPos = new Vector3Int (Random.Range (0, Map.GetWidth ()), 0, Random.Range(0, Map.GetHeight ()));
+            transform.position = new Vector3((StartPos.x+0.5f)*scale, 0.5f*scale, (StartPos.z+0.5f)*scale);
+            CalcStarPos = transform.position;
+            
         }
     }
 
     protected void Circle() {
+        Swim ();
         tc += Time.deltaTime*speed;
-        float x = (Mathf.Cos (tc)/2+StartPos.x)*scale;
-        float z = (Mathf.Sin (tc)/2+StartPos.y)*scale;
-        float y = (0.5f+StartPos.z)*scale;
-        transform.position = new Vector3 (x, y, z);
+        float x = Mathf.Cos (tc)*rad;
+        float z = Mathf.Sin (tc)*rad;
+        transform.position =  CalcStarPos + new Vector3 (x, 0, z);
+        transform.rotation = Quaternion.LookRotation (CalcStarPos - transform.position);
     }
     
 }
