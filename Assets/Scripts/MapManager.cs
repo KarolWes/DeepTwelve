@@ -14,6 +14,7 @@ public class MapManager : MonoBehaviour
     private List<Vector3Int> _notVisited;
     [SerializeField] private GameObject _wallTilePrefab, _startMarker, _endMarker;
     [SerializeField] private GameObject _wall3D, _marker3d;
+    private Vector3Int _start, _end;
 
     public int[,] _neighbours = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private Dictionary <Vector3Int, List<bool> > _walls;
@@ -21,17 +22,18 @@ public class MapManager : MonoBehaviour
         _notVisited = new List<Vector3Int> ();
         _walls = new Dictionary<Vector3Int, List<bool>> ();
         Fill ();
-        var start = _walls.Keys.ElementAt(Random.Range (0, _walls.Keys.Count));
-        Generate(start);
+        _start = _walls.Keys.ElementAt(Random.Range (0, _walls.Keys.Count));
+        Generate(_start);
         SetUpWalls();
-        GameManager.Instance.UpdateGameState (GameState.Game);
-        GameObject ball = Instantiate(_marker3d, start, Quaternion.Euler(new Vector3(0, 0, 0)));
-        ball.transform.position = new Vector3 (start.x, 0.5f, start.y);
+        GameObject ball = Instantiate(_marker3d, _start, Quaternion.Euler(new Vector3(0, 0, 0)));
+        ball.transform.position = new Vector3 (_start.x, 0.5f, _start.y);
         ball.transform.position = ball.transform.position*5;
-        ball = Instantiate (_marker3d, FindFurthest (start), Quaternion.identity);
+        _end = FindFurthest (_start);
+        ball = Instantiate (_marker3d, _end, Quaternion.identity);
         var pos = ball.transform.position;
         ball.transform.position = new Vector3 (pos.x, 0.5f, pos.y);
         ball.transform.position = ball.transform.position*5;
+        GameManager.Instance.UpdateGameState (GameState.Game);
     }
 
     void Fill() {
@@ -138,5 +140,52 @@ public class MapManager : MonoBehaviour
     public int GetHeight() {
         return _height;
     }
-    
+
+    public Vector3Int GetStartPoint() {
+        return _start;
+    }
+
+    public Vector3Int GetEndPoint() {
+        return _end;
+    }
+
+    public List<Vector3Int> Escape(Vector3Int start) {
+        var path = new Dictionary<Vector3Int, Vector3Int> ();
+        var q = new Queue<Vector3Int> ();
+        q.Enqueue (start);
+        while (q.Count > 0)
+        {
+            var act = q.Dequeue ();
+            if (act == _end)
+            {
+                break;
+            }
+
+            var neigh = GetAccessible (act);
+            for (var i = 0; i < 4; i ++)
+            {
+                if (!neigh[i])
+                {
+                    var next = new Vector3Int (act.x + _neighbours[i, 0], act.y + _neighbours[i, 1], 0);
+                    if (!path.ContainsKey (next))
+                    {
+                        path.Add (next, act);
+                        q.Enqueue (next);
+                    }
+                }
+            }
+        }
+
+        var steps = new List<Vector3Int> ();
+        steps.Add (_end);
+        var pos = _end;
+        while (pos != start)
+        {
+            pos = path[pos];
+            steps.Add (pos);
+        }
+
+        steps.Reverse ();
+        return steps;
+    } 
 }
