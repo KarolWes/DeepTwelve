@@ -280,15 +280,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57883cda18d8a3e48b9ba3344c6dbcd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 20
-  _height: 20
-  _map: {fileID: 121411576}
-  _floor: {fileID: 11400000, guid: 04ff333799cbb0248a9713dd9ab92e4a, type: 2}
-  _wallTilePrefab: {fileID: 317887510242563443, guid: edb1308cb0b107b4ebda0ef196f12339, type: 3}
-  _startMarker: {fileID: 7169432734335067174, guid: 303d1896c625739459035ec222331c89, type: 3}
-  _endMarker: {fileID: 3890007118349260871, guid: a31d512bb5cefed4296a3f5ff14a3220, type: 3}
-  _wall3D: {fileID: 9177623548239084949, guid: cba44461d9179dc4fad850af62ee4eaa, type: 3}
-  _marker3d: {fileID: 4674539873790780179, guid: b0134b17c6b47da45a753c117a36b576, type: 3}
+  width: 20
+  height: 20
+  map: {fileID: 121411576}
+  floor: {fileID: 11400000, guid: 04ff333799cbb0248a9713dd9ab92e4a, type: 2}
+  wall3D: {fileID: 9177623548239084949, guid: cba44461d9179dc4fad850af62ee4eaa, type: 3}
+  marker3d: {fileID: 4674539873790780179, guid: b0134b17c6b47da45a753c117a36b576, type: 3}
 --- !u!1 &209721151
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,9 +761,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1158515662}
+  radius: 2
   speed: 10
   scale: 5
-  rad: 2
   range: 20
 --- !u!95 &1158515662
 Animator:
@@ -806,9 +803,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1158515662}
+  radius: 2
   speed: 2
   scale: 5
-  rad: 2
+  range: 10
+  player: {fileID: 1899668630}
 --- !u!1 &1710952506
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 698cf0ea1765f4f409a06f60c6600bee, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 698cf0ea1765f4f409a06f60c6600bee, type: 3}
       propertyPath: m_LocalPosition.z
@@ -981,3 +980,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a2574977a13d9479be916a53e419cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1899668630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899668623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dc7f9a581f53e42ab67a38a694240d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: 5

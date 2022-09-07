@@ -29,18 +29,18 @@ public class SilverFish : FishGeneral {
         if (state == GameState.Game)
         {
             _steps = new List<Vector3> ();
-            StartPos = new Vector3Int (StartPos.x, StartPos.z, 0);
+            StartPosFixed = new Vector3Int (StartPosFixed.x, StartPosFixed.z, 0);
             GenerateRoute ();
             
             _finish = new Vector3 (_steps[0].x, Random.Range (0.0f, 1.0f)*scale, _steps[0].y);
-            transform.position = new Vector3((StartPos.x+0.5f)*scale, 0.5f*scale, (StartPos.y+0.5f)*scale);
+            transform.position = new Vector3((StartPosFixed.x+0.5f)*scale, 0.5f*scale, (StartPosFixed.y+0.5f)*scale);
             transform.rotation = Quaternion.LookRotation (_finish); 
             Ready = true;
         }
     }
 
     void GenerateRoute() {
-        var pos = StartPos;
+        var pos = StartPosFixed;
 
         for (int i = 0; i < range; i ++)
         {
@@ -50,7 +50,7 @@ public class SilverFish : FishGeneral {
             {
                 if (!acc[j])
                 {
-                    next.Add (new Vector3Int (pos.x+Map._neighbours[j,0], pos.y+Map._neighbours[j,1], 0));
+                    next.Add (new Vector3Int (pos.x+Map.Neighbours[j,0], pos.y+Map.Neighbours[j,1], 0));
                 }
             }
             pos = next[Random.Range (0, next.Count)];
@@ -81,7 +81,7 @@ public class SilverFish : FishGeneral {
     void Update() {
         if (Ready)
         {
-            Swim ();
+            SwimAnimation ();
             transform.position = Vector3.MoveTowards (transform.position, _finish, speed*Time.deltaTime);
             if (transform.position == _finish)
             {

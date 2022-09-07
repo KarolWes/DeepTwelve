@@ -2,27 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class FishGeneral : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private Animator animator;
-    protected Renderer FishRend;
+    [FormerlySerializedAs ("rad")] [SerializeField] protected float radius = 2; 
     [SerializeField] protected float speed = 1f;
     [SerializeField] protected float scale = 5f;
-    protected Vector3Int StartPos;
-    protected Vector3 CalcStarPos;
+    protected Vector3Int StartPosFixed;
+    protected Vector3 StartPosRelative;
     protected MapManager Map;
     protected bool Ready = false;
     protected float tc = 0;
-    [SerializeField] protected float rad = 2;
-
+    protected Renderer FishRend;
+    
     private void Start() {
         FishRend = GetComponent<Renderer> ();
     }
 
-    protected void Swim() {
+    protected void SwimAnimation() {
         if (animator.GetCurrentAnimatorStateInfo (0).normalizedTime > 1 && !animator.IsInTransition (0))
         {
             animator.SetTrigger ("swim");
@@ -32,20 +33,27 @@ public class FishGeneral : MonoBehaviour
         if (state == GameState.Game)
         {
             Map = FindObjectOfType <MapManager> ();
-            StartPos = new Vector3Int (Random.Range (0, Map.GetWidth ()), 0, Random.Range(0, Map.GetHeight ()));
-            transform.position = new Vector3((StartPos.x+0.5f)*scale, 0.5f*scale, (StartPos.z+0.5f)*scale);
-            CalcStarPos = transform.position;
+            StartPosFixed = new Vector3Int (Random.Range (0, Map.GetWidth ()), 0, Random.Range(0, Map.GetHeight ()));
+            transform.position = new Vector3((StartPosFixed.x+0.5f)*scale, 0.5f*scale, (StartPosFixed.z+0.5f)*scale);
+            StartPosRelative = transform.position;
             
         }
     }
 
     protected void Circle() {
-        Swim ();
+        SwimAnimation ();
         tc += Time.deltaTime*speed;
-        float x = Mathf.Cos (tc)*rad;
-        float z = Mathf.Sin (tc)*rad;
-        transform.position =  CalcStarPos + new Vector3 (x, 0, z);
-        transform.rotation = Quaternion.LookRotation (CalcStarPos - transform.position);
+        float x = Mathf.Cos (tc)*radius;
+        float z = Mathf.Sin (tc)*radius;
+        transform.position =  StartPosRelative + new Vector3 (x, 0, z);
+        transform.rotation = Quaternion.LookRotation (StartPosRelative - transform.position);
     }
-    
+
+    protected void CalculateStartPosRelative() {
+        StartPosRelative = (StartPosFixed + new Vector3 (0.5f, 0.5f, 0.5f)) * scale;
+    }
+
+    protected void CalculateStartPosFixed() {
+        StartPosFixed =Vector3Int.FloorToInt (StartPosRelative / scale - new Vector3 (0.5f, 0.5f, 0.5f));
+    }
 }

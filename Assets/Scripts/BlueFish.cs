@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 public class BlueFish : FishGeneral {
-    private List<Vector3> _steps;
-
     [SerializeField] private int range = 10;
-
+    [SerializeField] private PlayerMechanics player;
     private int _stepId = 1;
-
-    private bool goal = false;
+    private List<Vector3> _steps;
+    private bool _goal = false;
+    
     //leads player to the exit. Limited steps. Starts when player enters the room
     // Start is called before the first frame update
     void Start() {}
@@ -27,7 +26,7 @@ public class BlueFish : FishGeneral {
         if (state == GameState.Game)
         {
             _steps = new List<Vector3> ();
-            var tmp = Map.Escape (new Vector3Int (StartPos.x, StartPos.z));
+            var tmp = Map.Escape (new Vector3Int (StartPosFixed.x, StartPosFixed.z));
             foreach (var pos in tmp)
             {
                 _steps.Add (new Vector3 (pos.x + 0.5f, 0.5f, pos.y + 0.5f) * scale);
@@ -39,13 +38,16 @@ public class BlueFish : FishGeneral {
     
     // Update is called once per frame
     void Update() {
+        Debug.Log ("Fish: " + StartPosFixed );
         if (Ready)
         {
-            if (Input.GetKeyDown (KeyCode.K))//zasadniczy warunek: jeżeli gracz jest w tym samym pokoju
+            if (player.GetPosFixed () == StartPosFixed)//zasadniczy warunek: jeżeli gracz jest w tym samym pokoju
+                                                       //Działa, ale nie idealnie, wymaga przepłynięcia dokładnie przez środek pokoju
+                                                       //Poprawki trzeba zrobić w kodzie liczącym pozycję łodzi
             {
-                if (_stepId <= range && goal == false)
+                if (_stepId <= range && _goal == false)
                 {
-                    goal = true;
+                    _goal = true;
                     transform.rotation = Quaternion.LookRotation (_steps[_stepId]-transform.position);
                 }
             }
@@ -55,15 +57,16 @@ public class BlueFish : FishGeneral {
     }
 
     void Move() {
-        if (goal)
+        if (_goal)
         {
-            Swim ();
+            SwimAnimation ();
             transform.position = Vector3.MoveTowards (transform.position, _steps[_stepId], speed*Time.deltaTime);
             if (transform.position == _steps[_stepId])
             {
                 _stepId++;
-                goal = false;
-                CalcStarPos = transform.position;
+                _goal = false;
+                StartPosRelative = transform.position;
+                CalculateStartPosFixed ();
             }
         }
         else

@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] private int _width, _height;
-    [SerializeField] private Tilemap _map;
-    [SerializeField] private Tile _floor;
-    private List<Vector3Int> _notVisited;
-    [SerializeField] private GameObject _wallTilePrefab, _startMarker, _endMarker;
-    [SerializeField] private GameObject _wall3D, _marker3d;
+    [FormerlySerializedAs ("_width")] [SerializeField] private int width;
+    [FormerlySerializedAs ("_height")] [SerializeField] private int height;
+    [FormerlySerializedAs ("_map")] [SerializeField] private Tilemap map;
+    [FormerlySerializedAs ("_floor")] [SerializeField] private Tile floor;
+    //[SerializeField] private GameObject _wallTilePrefab, _startMarker, _endMarker;
+    [FormerlySerializedAs ("_wall3D")] [SerializeField] private GameObject wall3D;
+    [FormerlySerializedAs ("_marker3d")] [SerializeField] private GameObject marker3d;
     private Vector3Int _start, _end;
+    private List<Vector3Int> _notVisited;
 
-    public int[,] _neighbours = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    public int[,] Neighbours = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private Dictionary <Vector3Int, List<bool> > _walls;
     void Start() {
         _notVisited = new List<Vector3Int> ();
@@ -25,24 +28,24 @@ public class MapManager : MonoBehaviour
         _start = _walls.Keys.ElementAt(Random.Range (0, _walls.Keys.Count));
         Generate(_start);
         SetUpWalls();
-        GameObject ball = Instantiate(_marker3d, _start, Quaternion.Euler(new Vector3(0, 0, 0)));
-        ball.transform.position = new Vector3 (_start.x, 0.5f, _start.y);
-        ball.transform.position = ball.transform.position*5;
+        var ball = Instantiate(marker3d, _start, Quaternion.Euler(new Vector3(0, 0, 0))).transform.position;
+        ball = new Vector3 (_start.x, 0.5f, _start.y);
+        ball *= 5;
         _end = FindFurthest (_start);
-        ball = Instantiate (_marker3d, _end, Quaternion.identity);
-        var pos = ball.transform.position;
-        ball.transform.position = new Vector3 (pos.x, 0.5f, pos.y);
-        ball.transform.position = ball.transform.position*5;
+        ball = Instantiate (marker3d, _end, Quaternion.identity).transform.position;
+        var pos = ball;
+        ball = new Vector3 (pos.x, 0.5f, pos.y);
+        ball *= 5;
         GameManager.Instance.UpdateGameState (GameState.Game);
     }
 
     void Fill() {
-        for (int i = 0; i < _width; i ++)
+        for (int i = 0; i < width; i ++)
         {
-            for (int j = 0; j < _height; j ++)
+            for (int j = 0; j < height; j ++)
             {
                 var position = new Vector3Int (i+1, j+1, 0);
-                _map.SetTile (position, _floor);
+                map.SetTile (position, floor);
                 _notVisited.Add (position);
                 _walls.Add (position, new List<bool> {true, true, true, true});
             }
@@ -55,7 +58,7 @@ public class MapManager : MonoBehaviour
         var goal = start;
         for (int i = 0; i < 4; i ++)
         {
-            var newPos = new Vector3Int (start.x + _neighbours[a, 0], start.y + _neighbours[a, 1], 0);
+            var newPos = new Vector3Int (start.x + Neighbours[a, 0], start.y + Neighbours[a, 1], 0);
             q.Push (new Tuple<Vector3Int, Vector3Int> (start, newPos));
             a = (a + 1) % 4;
         }
@@ -71,7 +74,7 @@ public class MapManager : MonoBehaviour
                 _notVisited.Remove (act);
                 int[] dir = {act.x - prev.x, act.y-prev.y};
                 int i = 0;
-                while (_neighbours[i,0] != dir[0] || _neighbours[i,1] != dir[1])
+                while (Neighbours[i,0] != dir[0] || Neighbours[i,1] != dir[1])
                 {
                     i ++;
                 }
@@ -80,7 +83,7 @@ public class MapManager : MonoBehaviour
                 a = Random.Range (0, 3);
                 for (int j = 0; j < 4; j ++)
                 {
-                    var newPos = new Vector3Int (act.x + _neighbours[a, 0], act.y + _neighbours[a, 1], 0);
+                    var newPos = new Vector3Int (act.x + Neighbours[a, 0], act.y + Neighbours[a, 1], 0);
                     q.Push (new Tuple<Vector3Int, Vector3Int> (act, newPos));
                     a = (a + 1) % 4;
                 }
@@ -96,8 +99,8 @@ public class MapManager : MonoBehaviour
                 var w = _walls[pos][i];
                 if (w)
                 {
-                    GameObject wall = Instantiate(_wall3D, pos, Quaternion.Euler(new Vector3(0, 90*(i) , 0)));
-                    wall.transform.position = new Vector3 (pos.x + 0.5f*_neighbours[i, 0]+0.5f, 0.5f, pos.y + 0.5f*_neighbours[i, 1]+0.5f);
+                    GameObject wall = Instantiate(wall3D, pos, Quaternion.Euler(new Vector3(0, 90*(i) , 0)));
+                    wall.transform.position = new Vector3 (pos.x + 0.5f*Neighbours[i, 0]+0.5f, 0.5f, pos.y + 0.5f*Neighbours[i, 1]+0.5f);
                     wall.transform.position = wall.transform.position*5;
                 }
             }
@@ -116,7 +119,7 @@ public class MapManager : MonoBehaviour
             furthest = a;
             for (int i = 0; i < 4; i ++)
             {
-                var newPos = new Vector3Int (a.x + _neighbours[i, 0], a.y + _neighbours[i, 1], 0);
+                var newPos = new Vector3Int (a.x + Neighbours[i, 0], a.y + Neighbours[i, 1], 0);
                 if (!_walls[a][i])
                 {
                     if (!visited.Contains (newPos))
@@ -134,11 +137,11 @@ public class MapManager : MonoBehaviour
     }
 
     public int GetWidth() {
-        return _width;
+        return width;
     }
 
     public int GetHeight() {
-        return _height;
+        return height;
     }
 
     public Vector3Int GetStartPoint() {
@@ -166,7 +169,7 @@ public class MapManager : MonoBehaviour
             {
                 if (!neigh[i])
                 {
-                    var next = new Vector3Int (act.x + _neighbours[i, 0], act.y + _neighbours[i, 1], 0);
+                    var next = new Vector3Int (act.x + Neighbours[i, 0], act.y + Neighbours[i, 1], 0);
                     if (!path.ContainsKey (next))
                     {
                         path.Add (next, act);
