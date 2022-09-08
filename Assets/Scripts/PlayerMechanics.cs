@@ -17,7 +17,7 @@ public class PlayerMechanics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log (_posFixed);
+        //Debug.Log (_posFixed);
     }
     protected void Awake() {
         GameManager.OnGameStateChange += GameManagerOnGameStateChanged;
