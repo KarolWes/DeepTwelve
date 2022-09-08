@@ -16,7 +16,7 @@ public class FishGeneral : MonoBehaviour
     protected Vector3 StartPosRelative;
     protected MapManager Map;
     protected bool Ready = false;
-    protected float tc = 0;
+    protected float Tc = 0;
     protected Renderer FishRend;
     
     private void Start() {
@@ -42,9 +42,9 @@ public class FishGeneral : MonoBehaviour
 
     protected void Circle() {
         SwimAnimation ();
-        tc += Time.deltaTime*speed;
-        float x = Mathf.Cos (tc)*radius;
-        float z = Mathf.Sin (tc)*radius;
+        Tc += Time.deltaTime*speed;
+        float x = Mathf.Cos (Tc)*radius;
+        float z = Mathf.Sin (Tc)*radius;
         transform.position =  StartPosRelative + new Vector3 (x, 0, z);
         transform.rotation = Quaternion.LookRotation (StartPosRelative - transform.position);
     }
