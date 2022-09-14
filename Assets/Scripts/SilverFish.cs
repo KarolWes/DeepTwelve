@@ -32,8 +32,8 @@ public class SilverFish : FishGeneral {
             StartPosFixed = new Vector3Int (StartPosFixed.x, StartPosFixed.z, 0);
             GenerateRoute ();
             
-            _finish = new Vector3 (_steps[0].x, Random.Range (0.0f, 1.0f)*scale, _steps[0].y);
-            transform.position = new Vector3((StartPosFixed.x+0.5f)*scale, 0.5f*scale, (StartPosFixed.y+0.5f)*scale);
+            _finish = new Vector3 (_steps[0].x, Random.Range (0.0f, 1.0f)*MapManager.Scale, _steps[0].y);
+            transform.position = new Vector3((StartPosFixed.x+0.5f)*MapManager.Scale, 0.5f*MapManager.Scale, (StartPosFixed.y+0.5f)*MapManager.Scale);
             transform.rotation = Quaternion.LookRotation (_finish); 
             Ready = true;
         }
@@ -73,7 +73,7 @@ public class SilverFish : FishGeneral {
         }
         for(int i = 0; i < 2*range-1; i++)
         {
-            _steps[i] = (_steps[i] + new Vector3 (0.5f, 0.5f, 0.5f)) * scale;
+            _steps[i] = (_steps[i] + new Vector3 (0.5f, 0.5f, 0.5f)) * MapManager.Scale;
         }
     }
 
@@ -86,7 +86,7 @@ public class SilverFish : FishGeneral {
             if (transform.position == _finish)
             {
                 _stepId = (_stepId + 1) % _steps.Count;
-                _finish = new Vector3 (_steps[_stepId].x, Random.Range (0.0f, 1.0f)*scale, _steps[_stepId].y);
+                _finish = new Vector3 (_steps[_stepId].x, Random.Range (0.0f, 1.0f)*MapManager.Scale, _steps[_stepId].y);
                 transform.rotation = Quaternion.LookRotation (_finish-transform.position);
             }
         }
