@@ -11,7 +11,7 @@ public class FishGeneral : MonoBehaviour
     [SerializeField] private Animator animator;
     [FormerlySerializedAs ("rad")] [SerializeField] protected float radius = 2; 
     [SerializeField] protected float speed = 1f;
-    [SerializeField] protected float scale = 5f;
+    //[SerializeField] protected float scale = 5f;
     protected Vector3Int StartPosFixed;
     protected Vector3 StartPosRelative;
     protected MapManager Map;
@@ -34,7 +34,7 @@ public class FishGeneral : MonoBehaviour
         {
             Map = FindObjectOfType <MapManager> ();
             StartPosFixed = new Vector3Int (Random.Range (0, Map.GetWidth ()), 0, Random.Range(0, Map.GetHeight ()));
-            transform.position = new Vector3((StartPosFixed.x+0.5f)*scale, 0.5f*scale, (StartPosFixed.z+0.5f)*scale);
+            transform.position = new Vector3((StartPosFixed.x+0.5f)*MapManager.Scale, 0.5f*MapManager.Scale, (StartPosFixed.z+0.5f)*MapManager.Scale);
             StartPosRelative = transform.position;
             
         }
@@ -50,10 +50,10 @@ public class FishGeneral : MonoBehaviour
     }
 
     protected void CalculateStartPosRelative() {
-        StartPosRelative = (StartPosFixed + new Vector3 (0.5f, 0.5f, 0.5f)) * scale;
+        StartPosRelative = (StartPosFixed + new Vector3 (0.5f, 0.5f, 0.5f)) * MapManager.Scale;
     }
 
     protected void CalculateStartPosFixed() {
-        StartPosFixed =Vector3Int.FloorToInt (StartPosRelative / scale - new Vector3 (0.5f, 0.5f, 0.5f));
+        StartPosFixed =Vector3Int.FloorToInt (StartPosRelative / MapManager.Scale - new Vector3 (0.5f, 0.5f, 0.5f));
     }
 }

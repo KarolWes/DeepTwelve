@@ -18,8 +18,9 @@ public class MapManager : MonoBehaviour
     [FormerlySerializedAs ("_marker3d")] [SerializeField] private GameObject marker3d;
     private Vector3Int _start, _end;
     private List<Vector3Int> _notVisited;
+    public const int Scale = 5;
 
-    public int[,] Neighbours = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    public readonly int[,] Neighbours = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private Dictionary <Vector3Int, List<bool> > _walls;
     void Start() {
         _notVisited = new List<Vector3Int> ();
@@ -30,12 +31,12 @@ public class MapManager : MonoBehaviour
         SetUpWalls();
         var ball = Instantiate(marker3d, _start, Quaternion.Euler(new Vector3(0, 0, 0))).transform.position;
         ball = new Vector3 (_start.x, 0.5f, _start.y);
-        ball *= 5;
+        ball *= Scale;
         _end = FindFurthest (_start);
         ball = Instantiate (marker3d, _end, Quaternion.identity).transform.position;
         var pos = ball;
         ball = new Vector3 (pos.x, 0.5f, pos.y);
-        ball *= 5;
+        ball *= Scale;
         GameManager.Instance.UpdateGameState (GameState.Game);
     }
 
@@ -100,8 +101,9 @@ public class MapManager : MonoBehaviour
                 if (w)
                 {
                     GameObject wall = Instantiate(wall3D, pos, Quaternion.Euler(new Vector3(0, 90*(i) , 0)));
+                    wall.transform.localScale = new Vector3 (Scale, Scale, 0.1f);
                     wall.transform.position = new Vector3 (pos.x + 0.5f*Neighbours[i, 0]+0.5f, 0.5f, pos.y + 0.5f*Neighbours[i, 1]+0.5f);
-                    wall.transform.position = wall.transform.position*5;
+                    wall.transform.position = wall.transform.position*Scale;
                 }
             }
         }

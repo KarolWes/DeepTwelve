@@ -29,7 +29,7 @@ public class BlueFish : FishGeneral {
             var tmp = Map.Escape (new Vector3Int (StartPosFixed.x, StartPosFixed.z));
             foreach (var pos in tmp)
             {
-                _steps.Add (new Vector3 (pos.x + 0.5f, 0.5f, pos.y + 0.5f) * scale);
+                _steps.Add (new Vector3 (pos.x + 0.5f, 0.5f, pos.y + 0.5f) * MapManager.Scale);
             }
 
             Ready = true;

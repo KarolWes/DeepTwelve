@@ -7,7 +7,6 @@ public class PlayerMechanics : MonoBehaviour
 {
     private Vector3Int _posFixed;
     private Vector3 _posRelative;
-    [SerializeField] private int scale = 5;
     private MapManager _map;
     void Start()
     {
@@ -37,13 +36,13 @@ public class PlayerMechanics : MonoBehaviour
         }
     }
     protected void CalculateStartPosRelative() {
-        _posRelative = (_posFixed + new Vector3 (0.5f, 0.5f, 0.5f)) * scale;
+        _posRelative = (_posFixed + new Vector3 (0.5f, 0.5f, 0.5f)) * MapManager.Scale;
     }
     
     void CalculatePosFix() {
-        if (Math.Abs (transform.position.x - _posRelative.x) > scale / 2.0f || Math.Abs (transform.position.z - _posRelative.z) > scale / 2.0f)
+        if (Math.Abs (transform.position.x - _posRelative.x) > MapManager.Scale / 2.0f || Math.Abs (transform.position.z - _posRelative.z) > MapManager.Scale / 2.0f)
         {
-             _posFixed = Vector3Int.FloorToInt (transform.position / scale - new Vector3 (0.5f, 0.5f, 0.5f));
+             _posFixed = Vector3Int.FloorToInt (transform.position / MapManager.Scale - new Vector3 (0.5f, 0.5f, 0.5f));
              CalculateStartPosRelative ();
         }
     }

@@ -34,8 +34,8 @@ public class GhostFish : FishGeneral {
             _delta = Random.Range (-Mathf.PI, Mathf.PI);
         }
         Tc += Time.deltaTime*speed;
-        float x = _bigA * Mathf.Sin (_a * Tc + _delta) * scale;
-        float z = _bigB * Mathf.Cos (_b * Tc) * scale;
+        float x = _bigA * Mathf.Sin (_a * Tc + _delta) * MapManager.Scale;
+        float z = _bigB * Mathf.Cos (_b * Tc) * MapManager.Scale;
         transform.position =  StartPosRelative + new Vector3 (x, 0, z);
         transform.rotation = Quaternion.LookRotation (StartPosRelative - transform.position);
     }
