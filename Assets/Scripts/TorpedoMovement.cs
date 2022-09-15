@@ -16,7 +16,11 @@ public class TorpedoMovement : MonoBehaviour {
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards (transform.position, goal, speed*Time.deltaTime); 
+        transform.position = Vector3.MoveTowards (transform.position, goal, speed*Time.deltaTime);
+        if (transform.position == goal)
+        {
+            Destroy (this); // nie działa
+        } 
     }
 
 }

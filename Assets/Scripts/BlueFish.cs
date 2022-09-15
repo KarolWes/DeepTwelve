@@ -38,7 +38,6 @@ public class BlueFish : FishGeneral {
     
     // Update is called once per frame
     void Update() {
-        //Debug.Log ("Fish: " + StartPosFixed );
         if (Ready)
         {
             if (player.GetPosFixed () == StartPosFixed)//zasadniczy warunek: jeżeli gracz jest w tym samym pokoju

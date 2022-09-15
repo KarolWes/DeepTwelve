@@ -53,6 +53,9 @@
      <Compile Include="Assets\scripts\TorpedoMovement.cs" />
      <Compile Include="Assets\scripts\MapManager.cs" />
      <Compile Include="Assets\scripts\GameManager.cs" />
+     <Compile Include="Assets\scripts\GoldFish.cs" />
+     <Compile Include="Assets\scripts\RedFish.cs" />
+     <Compile Include="Assets\scripts\GreenFish.cs" />
      <None Include="Assets\Jiggly Bubble Free\Shaders\Particle Alpha Blended Cubemap.shader" />
      <None Include="Assets\Jiggly Bubble Free\Shaders\Particle Alpha Blended Cubemap Skybox.shader" />
      <None Include="Assets\Jiggly Bubble Free\readme_Jiggly_Bubble_Free.txt" />

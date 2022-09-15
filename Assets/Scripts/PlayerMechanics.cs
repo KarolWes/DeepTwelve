@@ -8,6 +8,9 @@ public class PlayerMechanics : MonoBehaviour
     private Vector3Int _posFixed;
     private Vector3 _posRelative;
     private MapManager _map;
+    private int _points = 0;
+    private int _shoal = 0;
+    [SerializeField] private int shoalLimit = 3;
     void Start()
     {
         
@@ -50,5 +53,33 @@ public class PlayerMechanics : MonoBehaviour
     public Vector3Int GetPosFixed() {
         CalculatePosFix ();
         return _posFixed;
+    }
+
+    public Vector3 GetPosRelative() {
+        return _posRelative;
+    }
+
+    public int GetShoalCount() {
+        return _shoal;
+    }
+
+    public bool ChangeShoalCount() {
+        _shoal ++;
+        if (_shoal >= shoalLimit)
+        {
+            _shoal = 0;
+            // penalty (turn of the light, random turn, etc)
+            return true;
+        }
+        return false;
+    }
+
+    public void ChangePoints(int v) {
+        _points += v;
+        Debug.Log ("You now have " + _points + " points");
+    }
+
+    public int GetPoints() {
+        return _points;
     }
 }
