@@ -87,7 +87,7 @@ public class SilverFish : FishGeneral {
             {
                 _stepId = (_stepId + 1) % _steps.Count;
                 _finish = new Vector3 (_steps[_stepId].x, Random.Range (0.0f, 1.0f)*MapManager.Scale, _steps[_stepId].y);
-                transform.rotation = Quaternion.LookRotation (_finish-transform.position);
+                transform.rotation = Quaternion.LookRotation (_finish-transform.position)*Quaternion.Euler (0,180,0);
             }
         }
         

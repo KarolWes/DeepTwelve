@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class FishGeneral : MonoBehaviour
@@ -47,6 +48,7 @@ public class FishGeneral : MonoBehaviour
         float z = Mathf.Sin (Tc)*radius;
         transform.position =  StartPosRelative + new Vector3 (x, 0, z);
         transform.rotation = Quaternion.LookRotation (StartPosRelative - transform.position);
+        transform.rotation *= Quaternion.Euler (0,-90,0);
     }
 
     protected void CalculateStartPosRelative() {

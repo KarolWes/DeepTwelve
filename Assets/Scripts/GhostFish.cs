@@ -37,7 +37,7 @@ public class GhostFish : FishGeneral {
         float x = _bigA * Mathf.Sin (_a * Tc + _delta) * MapManager.Scale;
         float z = _bigB * Mathf.Cos (_b * Tc) * MapManager.Scale;
         transform.position =  StartPosRelative + new Vector3 (x, 0, z);
-        transform.rotation = Quaternion.LookRotation (StartPosRelative - transform.position);
+        transform.rotation = Quaternion.LookRotation (new Vector3 (x, 0, z))*Quaternion.Euler (0,90,0);
     }
 
     protected void Awake() {

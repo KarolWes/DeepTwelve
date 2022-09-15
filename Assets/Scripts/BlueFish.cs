@@ -48,7 +48,7 @@ public class BlueFish : FishGeneral {
                 if (_stepId <= range && _goal == false)
                 {
                     _goal = true;
-                    transform.rotation = Quaternion.LookRotation (_steps[_stepId]-transform.position);
+                    transform.rotation = Quaternion.LookRotation (_steps[_stepId]-transform.position)*Quaternion.Euler (0,180,0);
                 }
             }
             Move ();
