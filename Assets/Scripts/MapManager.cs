@@ -47,6 +47,7 @@ public class MapManager : MonoBehaviour
             {
                 var position = new Vector3Int (i+1, j+1, 0);
                 map.SetTile (position, floor);
+                map.size = new Vector3Int (Scale, Scale, Scale); // poprawić
                 _notVisited.Add (position);
                 _walls.Add (position, new List<bool> {true, true, true, true});
             }
