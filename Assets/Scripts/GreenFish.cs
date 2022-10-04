@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class GreenFish : FishGeneral
 {
@@ -16,7 +15,7 @@ public class GreenFish : FishGeneral
         GameManager.OnGameStateChange -= GameManagerOnGameStateChanged;
     }
 
-    void GameManagerOnGameStateChanged(GameState state) {
+    new void GameManagerOnGameStateChanged(GameState state) {
         base.GameManagerOnGameStateChanged (state);
         if (state == GameState.Game)
         {

@@ -26,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.W))
         {
-            goal -= transform.forward;
+            goal += transform.forward;
             _move = 1;
         }
         else if(Input.GetKey(KeyCode.S))
         {
-            goal += transform.forward;
+            goal -= transform.forward;
             _move = -1;
         }
         else

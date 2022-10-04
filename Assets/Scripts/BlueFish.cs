@@ -21,7 +21,7 @@ public class BlueFish : FishGeneral {
         GameManager.OnGameStateChange -= GameManagerOnGameStateChanged;
     }
 
-    void GameManagerOnGameStateChanged(GameState state) {
+    new void GameManagerOnGameStateChanged(GameState state) {
         base.GameManagerOnGameStateChanged (state);
         if (state == GameState.Game)
         {
