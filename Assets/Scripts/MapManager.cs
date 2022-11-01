@@ -18,7 +18,7 @@ public class MapManager : MonoBehaviour
     [FormerlySerializedAs ("_marker3d")] [SerializeField] private GameObject marker3d;
     private Vector3Int _start, _end;
     private List<Vector3Int> _notVisited;
-    public const int Scale = 5;
+    public const int Scale = 10;
 
     public readonly int[,] Neighbours = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     private Dictionary <Vector3Int, List<bool> > _walls;

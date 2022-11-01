@@ -50,5 +50,4 @@ public class PlayerMovement : MonoBehaviour
         //transform.Rotate(transform.LookAt (goal));
         transform.position = Vector3.MoveTowards(transform.position, goal, 4f * Time.deltaTime);
     }
-    
 }

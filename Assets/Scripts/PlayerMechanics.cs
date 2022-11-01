@@ -36,6 +36,7 @@ public class PlayerMechanics : MonoBehaviour
             _posFixed.z = _posFixed.y;
             _posFixed.y = 0;
             CalculateStartPosRelative ();
+            transform.position = _posRelative;
         }
     }
     protected void CalculateStartPosRelative() {
