@@ -18,11 +18,18 @@ public class PlayerMovement : MonoBehaviour
         Vector3 goal = transform.position;
         if(Input.GetKey(KeyCode.Space))
         {
-            goal += transform.up;
+            if (goal.y < 9)
+            {
+                goal += transform.up;
+            }
+            
         }
         if(Input.GetKey(KeyCode.LeftShift))
         {
-            goal -= transform.up;
+            if (goal.y > 1)
+            {
+                goal -= transform.up;
+            }
         }
         if(Input.GetKey(KeyCode.W))
         {

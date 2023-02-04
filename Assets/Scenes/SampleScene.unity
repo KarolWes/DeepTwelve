@@ -202,6 +202,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 638195877}
     m_Modifications:
+    - target: {fileID: 4482360419174043845, guid: 50bbef4ec947c274e971df88ef0da97d, type: 3}
+      propertyPath: m_Mass
+      value: 0.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482360419174043845, guid: 50bbef4ec947c274e971df88ef0da97d, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482360419174043845, guid: 50bbef4ec947c274e971df88ef0da97d, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8218572122927971973, guid: 50bbef4ec947c274e971df88ef0da97d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -265,6 +277,7 @@ GameObject:
   - component: {fileID: 121411576}
   - component: {fileID: 121411577}
   - component: {fileID: 121411579}
+  - component: {fileID: 121411580}
   m_Layer: 0
   m_Name: map
   m_TagString: Untagged
@@ -410,12 +423,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57883cda18d8a3e48b9ba3344c6dbcd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 20
-  height: 20
+  width: 5
+  height: 5
   map: {fileID: 121411576}
   floor: {fileID: 11400000, guid: 04ff333799cbb0248a9713dd9ab92e4a, type: 2}
   wall3D: {fileID: 9177623548239084949, guid: cba44461d9179dc4fad850af62ee4eaa, type: 3}
   marker3d: {fileID: 4674539873790780179, guid: b0134b17c6b47da45a753c117a36b576, type: 3}
+--- !u!65 &121411580
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121411575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 0, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &412692034
 PrefabInstance:
   m_ObjectHideFlags: 0
