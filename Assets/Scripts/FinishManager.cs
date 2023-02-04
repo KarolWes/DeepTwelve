@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FinishManager : MonoBehaviour
     {
-        protected MapManager Map;
+        private MapManager _map;
+        [SerializeField] private Button endGamePanel;
+        
         // Start is called before the first frame update
         private void Awake() {
             GameManager.OnGameStateChange += GameManagerOnGameStateChanged;
@@ -24,8 +27,9 @@ public class FinishManager : MonoBehaviour
         {
             if (state == GameState.Game)
             {
-                Map = FindObjectOfType<MapManager>();
-                var pos = Map.GetEndPoint();
+                endGamePanel.gameObject.SetActive(false);
+                _map = FindObjectOfType<MapManager>();
+                var pos = _map.GetEndPoint();
                 transform.position = new Vector3((pos.x + 0.5f) * MapManager.Scale, 0.5f * MapManager.Scale, (pos.y + 0.5f) * MapManager.Scale);
             }
 
@@ -35,7 +39,7 @@ public class FinishManager : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                print("You won!");
+                endGamePanel.gameObject.SetActive(true);
             }
         }
     }
