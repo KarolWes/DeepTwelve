@@ -37,7 +37,12 @@ public abstract class FishGeneral : MonoBehaviour
         if (state == GameState.Game)
         {
             Map = FindObjectOfType<MapManager>();
-            StartPosFixed = new Vector3Int(Random.Range(0, Map.GetWidth()), 0, Random.Range(0, Map.GetHeight()));
+            
+            StartPosFixed = new Vector3Int(Random.Range(1, Map.GetWidth()+1), 0, Random.Range(1, Map.GetHeight()+1));
+            while (StartPosFixed == Map.GetEndPoint())
+            {
+                StartPosFixed = new Vector3Int(Random.Range(1, Map.GetWidth()+1), 0, Random.Range(1, Map.GetHeight()+1));
+            }
             transform.position = new Vector3((StartPosFixed.x + 0.5f) * MapManager.Scale, 0.5f * MapManager.Scale, (StartPosFixed.z + 0.5f) * MapManager.Scale);
             StartPosRelative = transform.position;
 

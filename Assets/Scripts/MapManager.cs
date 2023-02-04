@@ -15,7 +15,6 @@ public class MapManager : MonoBehaviour
     [FormerlySerializedAs ("_floor")] [SerializeField] private Tile floor;
     //[SerializeField] private GameObject _wallTilePrefab, _startMarker, _endMarker;
     [FormerlySerializedAs ("_wall3D")] [SerializeField] private GameObject wall3D;
-    [FormerlySerializedAs ("_marker3d")] [SerializeField] private GameObject marker3d;
     private Vector3Int _start, _end;
     private List<Vector3Int> _notVisited;
     public const int Scale = 10;
@@ -29,14 +28,8 @@ public class MapManager : MonoBehaviour
         _start = _walls.Keys.ElementAt(Random.Range (0, _walls.Keys.Count));
         Generate(_start);
         SetUpWalls();
-        var ball = Instantiate(marker3d, _start, Quaternion.Euler(new Vector3(0, 0, 0))).transform.position;
-        ball = new Vector3 (_start.x, 0.5f, _start.y);
-        ball *= Scale;
         _end = FindFurthest (_start);
-        ball = Instantiate (marker3d, _end, Quaternion.identity).transform.position;
-        var pos = ball;
-        ball = new Vector3 (pos.x, 0.5f, pos.y);
-        ball *= Scale;
+        Debug.Log(_end);
         GameManager.Instance.UpdateGameState (GameState.Game);
     }
 
